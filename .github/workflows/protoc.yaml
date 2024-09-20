@@ -24,11 +24,11 @@ jobs:
           protoc --go_out=./golang --go_opt=paths=source_relative --go-grpc_out=./golang --go-grpc_opt=paths=source_relative ./**/*.proto
           cd golang
           if [ ! -f go.mod ]; then
-            go mod init github.com/OkabeRintarouBeta/microservice-protobuf
+            go mod init github.com/OkabeRintarouBeta/microservice-protobuf/golang
           fi
           go mod tidy
           git config --global user.email "zihuiliu@umich.edu"
           git config --global user.name "OkabeRintarouBeta"
           git add .
-          git commit -am "proto update" || echo "Nothing to commit"
+          git commit -am "proto update"
           git push origin main || echo "Nothing to commit"
