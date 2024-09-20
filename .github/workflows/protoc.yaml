@@ -16,19 +16,8 @@ jobs:
         with:
           token: ${{ secrets.GH_TOKEN }}
       - name: "Generate for Golang"
+        shell: bash
         run: |
-          sudo apt-get install -y protobuf-compiler golang-goprotobuf-dev
-          go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
-          go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
-          mkdir -p golang
-          protoc --go_out=./golang --go_opt=paths=source_relative --go-grpc_out=./golang --go-grpc_opt=paths=source_relative ./**/*.proto
-          cd golang
-          if [ ! -f go.mod ]; then
-            go mod init github.com/OkabeRintarouBeta/microservice-protobuf/golang
-          fi
-          go mod tidy
-          git config --global user.email "zihuiliu@umich.edu"
-          git config --global user.name "OkabeRintarouBeta"
-          git add .
-          git commit -am "proto update" || echo "Nothing to commit"
-          git push origin main || echo "Nothing to commit"
+          chmod +x "${GITHUB_WORKSPACE}/protoc.sh"
+          ls -alh ${GITHUB_WORKSPACE}
+          ./protoc.sh ${{ matrix.service }} ${{ env.RELEASE_VERSION }} ${{ github.actor }} ${{ github.actor }}@users.noreply.github.com
