@@ -22,8 +22,8 @@ jobs:
           cd golang
           go mod init github.com/OkabeRintarouBeta/microservice-protobuf
           go mod tidy
-          git config --global user.email "huseyinbabal88@gmail.com"
-          git config --global user.name "Huseyin BABAL"
+          git config --global user.email "zihuiliu@umich.edu"
+          git config --global user.name "OkabeRintarouBeta"
           git add .
           git commit -am "proto update"
           git push origin main
