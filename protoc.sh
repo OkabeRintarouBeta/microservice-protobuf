@@ -24,6 +24,12 @@ go mod tidy
 cd ../../
 git add . && git commit -am "proto update" || true
 git push origin HEAD:main
-git tag -fa golang/${SERVICE_NAME}/${RELEASE_VERSION} \
-  -m "golang/${SERVICE_NAME}/${RELEASE_VERSION}"
+# Check if the tag already exists in the remote repository
+if git ls-remote --tags origin | grep "golang/${SERVICE_NAME}/${RELEASE_VERSION}" >/dev/null; then
+  echo "Tag golang/${SERVICE_NAME}/${RELEASE_VERSION} already exists. Skipping tag creation."
+else
+  # Create and push the tag if it doesn't exist
+  git tag -a "golang/${SERVICE_NAME}/${RELEASE_VERSION}" -m "golang/${SERVICE_NAME}/${RELEASE_VERSION}"
+  git push origin "refs/tags/golang/${SERVICE_NAME}/${RELEASE_VERSION}"
+fi
 git push origin refs/tags/golang/${SERVICE_NAME}/${RELEASE_VERSION} --force
