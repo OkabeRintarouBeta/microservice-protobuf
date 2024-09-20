@@ -23,7 +23,9 @@ jobs:
           mkdir -p golang
           protoc --go_out=./golang --go_opt=paths=source_relative --go-grpc_out=./golang --go-grpc_opt=paths=source_relative ./**/*.proto
           cd golang
-          go mod init github.com/OkabeRintarouBeta/microservice-protobuf
+          if [ ! -f go.mod ]; then
+            go mod init github.com/OkabeRintarouBeta/microservice-protobuf
+          fi
           go mod tidy
           git config --global user.email "zihuiliu@umich.edu"
           git config --global user.name "OkabeRintarouBeta"
